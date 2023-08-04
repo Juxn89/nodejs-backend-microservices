@@ -4,20 +4,20 @@ const db = {
     ]
 };
 
-const list = (table) => { 
+const list = async (table) => { 
     return db[table]
 }
 
-const get = (table, id) => { 
-    let collections = list(table)
-    return collections.find(item => item.id === id)[0] || null;
+const get = async (table, id) => { 
+    const collections = await list(table)
+    return collections.find(item => item.id === id) || null;
 }
 
-const upsert = (table, data) => { 
+const upsert = async (table, data) => { 
     db[table].push(data) 
 }
 
-const remove = (table, id) => { 
+const remove = async (table, id) => { 
     return true;
 }
 
