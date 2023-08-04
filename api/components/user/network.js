@@ -16,10 +16,16 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const { id } = req.params;
-    Controller.get(parseInt(id))
+    Controller.get(id)
 			.then(user => response.success(req, res, user, HTTP_STATUS.Ok))
 			.catch(err => { response.error(req, res, err, HTTP_STATUS.InternalServerError) })
-    response.success(req, res, user, HTTP_STATUS.Ok)
+})
+
+router.post('/', (req, res) => {
+	const { body } = req;
+	Controller.upsert(body)
+		.then(data => response.success(req, res, 'User added', HTTP_STATUS.Created))
+		.catch(err => response.error(req, res, err, HTTP_STATUS.InternalServerError))
 })
 
 module.exports = router;

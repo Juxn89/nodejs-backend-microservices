@@ -1,3 +1,4 @@
+const nanoid = require('nanoid')
 const TABLE_NAME = 'users'
 
 module.exports = (injectedStore) => {
@@ -14,8 +15,18 @@ module.exports = (injectedStore) => {
         return store.get(TABLE_NAME, id)
     }
 
+		const upsert = (body) => {
+			const user = {
+				id: body.id ?? nanoid(),
+				name: body.name
+			}
+
+			return store.upsert(TABLE_NAME, user)
+		}
+
     return {
         list,
         get,
+				upsert
     }
 }
